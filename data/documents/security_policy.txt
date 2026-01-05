@@ -1,0 +1,40 @@
+================================================================================
+                    TECHCORP INFORMATION SECURITY POLICY
+                         Effective Date: January 2026
+================================================================================
+
+1. PURPOSE
+----------
+This policy establishes the security requirements for all TechCorp employees,
+contractors, and third parties who access company information systems.
+
+2. SCOPE
+--------
+This policy applies to all information assets owned or managed by TechCorp.
+
+3. PASSWORD POLICY
+------------------
+- All passwords must be unique and not reused across systems
+- Password managers are strongly recommended
+- Multi-factor authentication (MFA) is required for all critical systems
+
+4. DATA CLASSIFICATION
+----------------------
+- PUBLIC: Information that can be freely shared
+- INTERNAL: For employee use only
+- CONFIDENTIAL: Sensitive business information
+- RESTRICTED: Highly sensitive (PII, financial data)
+
+5. INCIDENT REPORTING
+---------------------
+Report all security incidents immediately to: security@techcorp.local
+Emergency hotline: 555-0199
+
+6. ACCEPTABLE USE
+-----------------
+Company systems should be used primarily for business purposes.
+Limited personal use is acceptable during breaks.
+
+================================================================================
+                    COMPLIANCE IS MANDATORY FOR ALL EMPLOYEES
+================================================================================

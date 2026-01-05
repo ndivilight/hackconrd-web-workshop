@@ -1,0 +1,61 @@
+================================================================================
+                    TECHCORP BACKUP PROCEDURES
+                         IT Operations Manual
+================================================================================
+
+BACKUP SCHEDULE
+---------------
+Daily:    Incremental backups at 2:00 AM
+Weekly:   Full backup every Sunday at 1:00 AM
+Monthly:  Archive backup on 1st of each month
+
+BACKUP LOCATIONS
+----------------
+Primary:   NAS01 (10.0.10.50) - /backups/
+Secondary: AWS S3 - s3://techcorp-backups-prod/
+Offsite:   Iron Mountain - Monthly tape rotation
+
+BACKUP SCRIPTS
+--------------
+Location: /opt/scripts/backup/
+
+Daily Incremental:
+  ./daily_backup.sh
+  # Backs up /var/www, /home, /etc
+  # Retention: 7 days
+
+Weekly Full:
+  ./weekly_backup.sh
+  # Full system backup
+  # Retention: 4 weeks
+
+DATABASE BACKUP
+---------------
+MySQL:
+  mysqldump -u backup_user -p'B@ckup2026!' --all-databases > /backups/mysql_$(date +%Y%m%d).sql
+
+PostgreSQL:
+  pg_dump -U backup_user -h localhost portal_db > /backups/postgres_$(date +%Y%m%d).sql
+
+RESTORE PROCEDURES
+------------------
+1. Stop application services
+2. Restore from latest good backup
+3. Verify data integrity
+4. Restart services
+5. Test functionality
+
+EMERGENCY CONTACTS
+------------------
+Primary DBA:    John Smith (ext. 1001)
+Backup DBA:     Mike Wilson (ext. 1007)
+On-call pager:  555-0199
+
+AWS CREDENTIALS (Backup Service Account)
+----------------------------------------
+Access Key: AKIA3EXAMPLE1234567
+Secret Key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+================================================================================
+                    REVIEW ANNUALLY - LAST UPDATE: JAN 2026
+================================================================================

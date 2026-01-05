@@ -1,0 +1,55 @@
+================================================================================
+                    TECHCORP VPN CONFIGURATION GUIDE
+                         For Remote Employees
+================================================================================
+
+VPN SERVER DETAILS
+------------------
+Server Address: vpn.techcorp.local
+Port: 1194 (UDP)
+Protocol: OpenVPN
+
+AUTHENTICATION
+--------------
+Type: Certificate + Username/Password
+Certificate: Contact IT for personal certificate
+Username: Your TechCorp email (e.g., jsmith@techcorp.local)
+Password: Your network password
+
+INSTALLATION STEPS
+------------------
+1. Download OpenVPN client from https://openvpn.net/
+2. Install the client on your device
+3. Import the configuration file (provided by IT)
+4. Import your personal certificate
+5. Connect using your credentials
+
+CONFIGURATION FILE TEMPLATE
+---------------------------
+client
+dev tun
+proto udp
+remote vpn.techcorp.local 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ca ca.crt
+cert client.crt
+key client.key
+cipher AES-256-CBC
+auth SHA256
+verb 3
+
+TROUBLESHOOTING
+---------------
+- Connection timeout: Check firewall settings
+- Certificate error: Verify certificate hasn't expired
+- Authentication failed: Reset password via IT portal
+
+SUPPORT
+-------
+IT Helpdesk: ext. 1234
+Email: support@techcorp.local
+
+================================================================================

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Payslip - {{ employee['first_name'] }} {{ employee['last_name'] }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-file-text"></i> Employee Payslip</h2>
+    <a href="{{ url_for('employees.profile', id=employee['id']) }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Profile
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-building"></i> TechCorp Inc.</span>
+            <span>Pay Period: January 2026</span>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h5>Employee Details</h5>
+                <p class="mb-1"><strong>Name:</strong> {{ employee['first_name'] }} {{ employee['last_name'] }}</p>
+                <p class="mb-1"><strong>Employee ID:</strong> {{ employee['employee_id'] }}</p>
+                <p class="mb-1"><strong>Department:</strong> {{ employee['department'] }}</p>
+                <p class="mb-0"><strong>Position:</strong> {{ employee['position'] }}</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <h5>Pay Summary</h5>
+                <p class="mb-0 display-6 text-success">${{ "%.2f"|format(employee['salary'] or 0) }}</p>
+                <small class="text-muted">Annual Salary</small>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Earnings</h6>
+                <table class="table table-sm">
+                    <tr>
+                        <td>Base Salary (Monthly)</td>
+                        <td class="text-end">${{ "%.2f"|format((employee['salary'] or 0) / 12) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Bonus</td>
+                        <td class="text-end">$0.00</td>
+                    </tr>
+                    <tr class="table-success">
+                        <td><strong>Gross Pay</strong></td>
+                        <td class="text-end"><strong>${{ "%.2f"|format((employee['salary'] or 0) / 12) }}</strong></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h6>Deductions</h6>
+                <table class="table table-sm">
+                    <tr>
+                        <td>Federal Tax (22%)</td>
+                        <td class="text-end">-${{ "%.2f"|format((employee['salary'] or 0) / 12 * 0.22) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Health Insurance</td>
+                        <td class="text-end">-$250.00</td>
+                    </tr>
+                    <tr>
+                        <td>401(k) (6%)</td>
+                        <td class="text-end">-${{ "%.2f"|format((employee['salary'] or 0) / 12 * 0.06) }}</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td><strong>Total Deductions</strong></td>
+                        <td class="text-end"><strong>-${{ "%.2f"|format((employee['salary'] or 0) / 12 * 0.28 + 250) }}</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <h4>Net Pay: <span class="text-success">${{ "%.2f"|format((employee['salary'] or 0) / 12 * 0.72 - 250) }}</span></h4>
+        </div>
+    </div>
+    <div class="card-footer text-muted text-center">
+        <small>This is a confidential document. Unauthorized access is prohibited.</small>
+    </div>
+</div>
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>IDOR Vulnerability:</strong>
+    This payslip should only be accessible by the employee themselves or HR.
+    However, there's no authorization check - any logged-in user can view any payslip!
+    Try: <code>/employees/1/payslip</code>, <code>/employees/2/payslip</code>, etc.
+</div>
+{% endif %}
+{% endblock %}

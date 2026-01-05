@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Documents - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-folder"></i> Company Documents</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Size</th>
+                        <th>Modified</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>
+                            {% set ext = file['name'].split('.')[-1].lower() %}
+                            <i class="bi bi-file-earmark-{{ 'pdf' if ext == 'pdf' else 'word' if ext in ['doc', 'docx'] else 'excel' if ext in ['xls', 'xlsx'] else 'text' }} file-icon {{ ext }}"></i>
+                            {{ file['name'] }}
+                        </td>
+                        <td>{{ "%.2f"|format(file['size'] / 1024) }} KB</td>
+                        <td>{{ file['modified'] }}</td>
+                        <td>
+                            <a href="{{ url_for('documents.download', file=file['name']) }}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-download"></i> Download
+                            </a>
+                            <a href="{{ url_for('documents.view', file=file['name']) }}"
+                               class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-eye"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">No documents available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>Directory Traversal Hints:</strong>
+    <ul class="mb-0">
+        <li>The <code>file</code> parameter is not sanitized</li>
+        <li>Try: <code>?file=../../../etc/passwd</code></li>
+        <li>Or: <code>?file=....//....//....//etc/passwd</code></li>
+        <li>View source files: <code>?file=../app/config.py</code></li>
+    </ul>
+</div>
+{% elif difficulty == 'medium' %}
+<!-- Check the file parameter handling in documents.py -->
+{% endif %}
+{% endblock %}

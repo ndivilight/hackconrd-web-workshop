@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Error - Documents{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <i class="bi bi-exclamation-triangle display-1 text-warning"></i>
+    <h2 class="mt-3">Document Error</h2>
+    <p class="text-muted">{{ error }}</p>
+    {% if attempted_path %}
+    <p><code>{{ attempted_path }}</code></p>
+    {% endif %}
+    <a href="{{ url_for('documents.index') }}" class="btn btn-primary">
+        <i class="bi bi-arrow-left"></i> Back to Documents
+    </a>
+</div>
+{% endblock %}

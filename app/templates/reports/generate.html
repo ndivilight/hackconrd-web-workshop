@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Report - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-file-earmark-code"></i> Custom Report Generator</h2>
+    <a href="{{ url_for('reports.index') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-code"></i> Template Editor
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('reports.generate') }}">
+                    <div class="mb-3">
+                        <label for="template-input" class="form-label">Enter your Jinja2 template:</label>
+                        <textarea class="form-control font-monospace" id="template-input"
+                                  name="custom_template" rows="12"
+                                  placeholder="Enter Jinja2 template code...">{{ template_content }}</textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-play"></i> Generate Report
+                        </button>
+                    </div>
+                </form>
+
+                <hr>
+
+                <h6>Available Variables:</h6>
+                <ul class="small">
+                    <li><code>user</code> - Current user info</li>
+                    <li><code>employees</code> - List of employees</li>
+                    <li><code>announcements</code> - List of announcements</li>
+                </ul>
+
+                <h6>Example Template:</h6>
+                <pre class="bg-light p-2 small"><code>&lt;h3&gt;Report for {{ "{{" }} user.username {{ "}}" }}&lt;/h3&gt;
+&lt;p&gt;Total employees: {{ "{{" }} employees|length {{ "}}" }}&lt;/p&gt;
+{{ "{%" }} for emp in employees {{ "%}" }}
+  &lt;p&gt;{{ "{{" }} emp.first_name {{ "}}" }} {{ "{{" }} emp.last_name {{ "}}" }}&lt;/p&gt;
+{{ "{%" }} endfor {{ "%}" }}</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-file-text"></i> Generated Output
+            </div>
+            <div class="card-body">
+                {% if error %}
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle"></i> {{ error }}
+                </div>
+                {% endif %}
+
+                {% if output %}
+                <div class="report-output border p-3 bg-light">
+                    {{ output | safe }}
+                </div>
+                {% else %}
+                <p class="text-muted text-center py-5">
+                    <i class="bi bi-file-earmark display-4"></i><br>
+                    Enter a template and click "Generate Report" to see output.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>SSTI Exploitation:</strong>
+    <ul class="mb-0">
+        <li>Basic test: <code>{{ "{{" }}7*7{{ "}}" }}</code> outputs 49</li>
+        <li>Config disclosure: <code>{{ "{{" }}config{{ "}}" }}</code></li>
+        <li>Class introspection: <code>{{ "{{" }}''.__class__.__mro__{{ "}}" }}</code></li>
+        <li>Find subclasses: <code>{{ "{{" }}''.__class__.__mro__[1].__subclasses__(){{ "}}" }}</code></li>
+        <li>RCE (find os module index): <code>{{ "{{" }}''.__class__.__mro__[1].__subclasses__()[INDEX]{{ "}}" }}</code></li>
+    </ul>
+</div>
+{% elif difficulty == 'medium' %}
+<!-- User input is passed to jinja2.Template() -->
+{% endif %}
+{% endblock %}

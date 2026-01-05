@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Announcements - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-megaphone"></i> Announcements</h2>
+    <div>
+        <a href="{{ url_for('announcements.search') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-search"></i> Search
+        </a>
+        <a href="{{ url_for('announcements.new') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> New Announcement
+        </a>
+    </div>
+</div>
+
+{% for announcement in announcements %}
+<div class="card announcement-card mb-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="card-title">{{ announcement['title'] }}</h5>
+                <p class="card-text">{{ announcement['content'] | safe }}</p>
+                <!-- VULNERABLE: Content rendered with |safe filter, allowing stored XSS -->
+            </div>
+        </div>
+        <div class="announcement-date mt-2">
+            <i class="bi bi-person"></i> {{ announcement['author_name'] or 'Unknown' }}
+            <span class="mx-2">|</span>
+            <i class="bi bi-calendar"></i> {{ announcement['created_at'] }}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body text-center text-muted py-5">
+        <i class="bi bi-megaphone display-4"></i>
+        <p class="mt-3">No announcements yet. Be the first to post one!</p>
+        <a href="{{ url_for('announcements.new') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create Announcement
+        </a>
+    </div>
+</div>
+{% endfor %}
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>XSS Hints:</strong>
+    <ul class="mb-0">
+        <li>Stored XSS: Post an announcement with <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></li>
+        <li>Image tag: <code>&lt;img src=x onerror="alert('XSS')"&gt;</code></li>
+        <li>SVG: <code>&lt;svg onload="alert('XSS')"&gt;</code></li>
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}{{ employee['first_name'] }} {{ employee['last_name'] }} - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="profile-header text-center">
+    <div class="container">
+        <div class="profile-avatar">
+            <i class="bi bi-person"></i>
+        </div>
+        <h2>{{ employee['first_name'] }} {{ employee['last_name'] }}</h2>
+        <p class="mb-0">{{ employee['position'] }} - {{ employee['department'] }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-person-vcard"></i> Employee Information
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Employee ID:</strong> {{ employee['employee_id'] }}</p>
+                        <p><strong>Email:</strong> {{ employee['email'] }}</p>
+                        <p><strong>Phone:</strong> {{ employee['phone'] }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Department:</strong> {{ employee['department'] }}</p>
+                        <p><strong>Position:</strong> {{ employee['position'] }}</p>
+                        <p><strong>Hire Date:</strong> {{ employee['hire_date'] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-gear"></i> Actions
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('employees.payslip', id=employee['id']) }}"
+                       class="btn btn-outline-primary">
+                        <i class="bi bi-file-text"></i> View Payslip
+                    </a>
+                    <a href="{{ url_for('employees.index') }}"
+                       class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Directory
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if user %}
+        <div class="card mt-3">
+            <div class="card-header">
+                <i class="bi bi-shield-lock"></i> Account Info
+            </div>
+            <div class="card-body">
+                <p class="mb-1"><strong>Username:</strong> {{ user['username'] }}</p>
+                <p class="mb-0"><strong>Role:</strong> {{ user['role'] }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>IDOR Hint:</strong>
+    Notice the URL contains the employee ID. Try changing it to access other profiles.
+    Current URL: <code>{{ request.url }}</code>
+</div>
+{% endif %}
+{% endblock %}

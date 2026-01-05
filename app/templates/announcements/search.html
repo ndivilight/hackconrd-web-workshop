@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Search Announcements - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-search"></i> Search Announcements</h2>
+    <a href="{{ url_for('announcements.index') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('announcements.search') }}">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q"
+                       placeholder="Search announcements..."
+                       value="{{ query }}">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i> Search
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if query %}
+<div class="mb-3">
+    <!-- VULNERABLE: Reflected XSS - query displayed without proper escaping -->
+    Showing results for: <strong>{{ query | safe }}</strong>
+</div>
+
+{% for announcement in announcements %}
+<div class="card announcement-card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ announcement['title'] }}</h5>
+        <p class="card-text">{{ announcement['content'] | safe }}</p>
+        <div class="announcement-date">
+            <i class="bi bi-person"></i> {{ announcement['author_name'] or 'Unknown' }}
+            <span class="mx-2">|</span>
+            <i class="bi bi-calendar"></i> {{ announcement['created_at'] }}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body text-center text-muted">
+        No announcements found matching "{{ query }}".
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>Reflected XSS:</strong>
+    The search query is reflected in the page. Try:
+    <code>?q=&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
+</div>
+{% endif %}
+{% endblock %}

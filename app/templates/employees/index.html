@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Employee Directory - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people"></i> Employee Directory</h2>
+    <a href="{{ url_for('employees.search') }}" class="btn btn-primary">
+        <i class="bi bi-search"></i> Search
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp['employee_id'] }}</td>
+                        <td>{{ emp['first_name'] }} {{ emp['last_name'] }}</td>
+                        <td>{{ emp['department'] }}</td>
+                        <td>{{ emp['position'] }}</td>
+                        <td>{{ emp['email'] }}</td>
+                        <td>
+                            <a href="{{ url_for('employees.profile', id=emp['id']) }}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-person"></i> View
+                            </a>
+                            <a href="{{ url_for('employees.payslip', id=emp['id']) }}"
+                               class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-file-text"></i> Payslip
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No employees found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>Hint:</strong>
+    Try accessing other employees' profiles by changing the ID in the URL.
+    Can you see salary information you shouldn't have access to?
+</div>
+{% endif %}
+{% endblock %}

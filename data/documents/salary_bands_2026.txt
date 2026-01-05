@@ -1,0 +1,61 @@
+================================================================================
+                    TECHCORP SALARY BANDS 2026
+                    HR CONFIDENTIAL - DO NOT DISTRIBUTE
+================================================================================
+
+ENGINEERING DEPARTMENT
+----------------------
+Junior Developer:        $45,000 - $65,000
+Mid-Level Developer:     $65,000 - $95,000
+Senior Developer:        $95,000 - $130,000
+Staff Engineer:          $130,000 - $170,000
+Principal Engineer:      $170,000 - $220,000
+Engineering Manager:     $140,000 - $180,000
+Director of Engineering: $180,000 - $250,000
+
+IT DEPARTMENT
+-------------
+IT Support Specialist:   $40,000 - $55,000
+System Administrator:    $60,000 - $90,000
+Network Engineer:        $75,000 - $110,000
+Security Analyst:        $80,000 - $120,000
+IT Manager:              $100,000 - $140,000
+CISO:                    $180,000 - $280,000
+
+HUMAN RESOURCES
+---------------
+HR Coordinator:          $38,000 - $50,000
+Recruiter:               $45,000 - $70,000
+HR Manager:              $70,000 - $100,000
+HR Director:             $110,000 - $160,000
+
+FINANCE
+-------
+Accountant:              $50,000 - $75,000
+Financial Analyst:       $60,000 - $90,000
+Finance Manager:         $90,000 - $130,000
+CFO:                     $200,000 - $350,000
+
+MARKETING
+---------
+Marketing Coordinator:   $35,000 - $50,000
+Marketing Specialist:    $50,000 - $75,000
+Marketing Manager:       $80,000 - $120,000
+CMO:                     $180,000 - $300,000
+
+EXECUTIVE
+---------
+VP (any department):     $180,000 - $280,000
+C-Suite (non-CEO):       $200,000 - $400,000
+CEO:                     $400,000 - $800,000 + equity
+
+================================================================================
+BONUS STRUCTURE
+================================================================================
+Individual Performance:  0% - 20% of base salary
+Company Performance:     0% - 10% of base salary
+Stock Options:          Available for Senior+ levels
+
+================================================================================
+                    STRICTLY CONFIDENTIAL
+================================================================================

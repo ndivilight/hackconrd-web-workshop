@@ -1,0 +1,57 @@
+================================================================================
+                         TECHCORP EMPLOYEE HANDBOOK
+                              Version 2.0 - 2026
+================================================================================
+
+Welcome to TechCorp!
+
+We're excited to have you as part of our team. This handbook contains important
+policies, procedures, and information about working at TechCorp.
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+
+1. Company Overview
+2. Employment Policies
+3. Code of Conduct
+4. Benefits & Compensation
+5. IT & Security Policies
+6. Health & Safety
+
+--------------------------------------------------------------------------------
+1. COMPANY OVERVIEW
+--------------------------------------------------------------------------------
+
+TechCorp was founded in 2010 with a mission to deliver innovative technology
+solutions to businesses worldwide. Today, we employ over 500 people across
+multiple offices.
+
+Our Core Values:
+- Innovation
+- Integrity
+- Collaboration
+- Excellence
+
+--------------------------------------------------------------------------------
+2. EMPLOYMENT POLICIES
+--------------------------------------------------------------------------------
+
+Working Hours: 9:00 AM - 5:00 PM (flexible arrangements available)
+Remote Work: Hybrid model - 3 days in office, 2 days remote
+
+--------------------------------------------------------------------------------
+5. IT & SECURITY POLICIES
+--------------------------------------------------------------------------------
+
+Password Requirements:
+- Minimum 12 characters
+- Must include uppercase, lowercase, numbers, and symbols
+- Change every 90 days
+
+Note: Default admin credentials for internal systems should be changed
+immediately upon deployment. (See IT department for details)
+
+--------------------------------------------------------------------------------
+                              END OF HANDBOOK
+================================================================================

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Search Employees - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-search"></i> Search Employees</h2>
+    <a href="{{ url_for('employees.index') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Directory
+    </a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('employees.search') }}" class="search-form">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q"
+                       placeholder="Search by name, department, or position..."
+                       value="{{ query }}">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i> Search
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle"></i> {{ error }}
+</div>
+{% endif %}
+
+{% if query %}
+<div id="search-results-header" class="mb-3">
+    <!-- VULNERABLE: Reflected XSS - query is inserted without escaping in JS -->
+    Search results for: <strong>{{ query }}</strong>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if employees %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp['employee_id'] or emp[1] }}</td>
+                        <td>{{ emp['first_name'] or emp[2] }} {{ emp['last_name'] or emp[3] }}</td>
+                        <td>{{ emp['department'] or emp[5] }}</td>
+                        <td>{{ emp['position'] or emp[6] }}</td>
+                        <td>{{ emp['email'] or emp[4] }}</td>
+                        <td>
+                            <a href="{{ url_for('employees.profile', id=emp['id'] or emp[0]) }}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-person"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted mb-0">No employees found matching your search.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% if difficulty == 'easy' %}
+<div class="hint-box mt-3">
+    <i class="bi bi-lightbulb"></i> <strong>SQL Injection Hints:</strong>
+    <ul class="mb-0">
+        <li>Try: <code>' OR '1'='1</code></li>
+        <li>Union attack: <code>' UNION SELECT 1,2,3,4,5,6,7,8,9,10,11--</code></li>
+        <li>Extract users: <code>' UNION SELECT id,username,password,role,department,email,created_at,null,null,null,null FROM users--</code></li>
+    </ul>
+</div>
+{% elif difficulty == 'medium' %}
+<!-- The search uses string concatenation. Column count: 11 -->
+{% endif %}
+{% endblock %}

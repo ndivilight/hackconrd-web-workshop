@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}IT Tools - TechCorp Portal{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2><i class="bi bi-tools"></i> Network Diagnostic Tools</h2>
+    <p class="text-muted">Use these tools to diagnose network connectivity issues.</p>
+</div>
+
+<div class="row">
+    <!-- Ping Tool -->
+    <div class="col-md-6 mb-4">
+        <div class="card tool-card">
+            <div class="card-header">
+                <i class="bi bi-broadcast tool-icon"></i>
+                <span class="ms-2 fw-bold">Ping</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Test connectivity to a host using ICMP echo.</p>
+                <form class="tool-form" action="{{ url_for('tools.ping') }}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="host"
+                               placeholder="Enter hostname or IP (e.g., google.com)">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-play-fill"></i> Execute
+                        </button>
+                    </div>
+                </form>
+                <div class="terminal-output">Waiting for command...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NSLookup Tool -->
+    <div class="col-md-6 mb-4">
+        <div class="card tool-card">
+            <div class="card-header">
+                <i class="bi bi-globe tool-icon"></i>
+                <span class="ms-2 fw-bold">DNS Lookup</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Query DNS records for a domain.</p>
+                <form class="tool-form" action="{{ url_for('tools.nslookup') }}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="domain"
+                               placeholder="Enter domain (e.g., example.com)">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-play-fill"></i> Execute
+                        </button>
+                    </div>
+                </form>
+                <div class="terminal-output">Waiting for command...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Traceroute Tool -->
+    <div class="col-md-6 mb-4">
+        <div class="card tool-card">
+            <div class="card-header">
+                <i class="bi bi-diagram-3 tool-icon"></i>
+                <span class="ms-2 fw-bold">Traceroute</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Trace the network path to a destination.</p>
+                <form class="tool-form" action="{{ url_for('tools.traceroute') }}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="host"
+                               placeholder="Enter hostname or IP">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-play-fill"></i> Execute
+                        </button>
+                    </div>
+                </form>
+                <div class="terminal-output">Waiting for command...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if difficulty == 'easy' %}
+<div class="hint-box">
+    <i class="bi bi-lightbulb"></i> <strong>Command Injection Hints:</strong>
+    <ul class="mb-0">
+        <li>The input is passed directly to the shell without sanitization</li>
+        <li>Try: <code>127.0.0.1; whoami</code></li>
+        <li>Or: <code>google.com | cat /etc/passwd</code></li>
+        <li>Backticks: <code>`id`</code></li>
+        <li>Command substitution: <code>$(cat /etc/passwd)</code></li>
+    </ul>
+</div>
+{% elif difficulty == 'medium' %}
+<!-- Commands are executed with shell=True -->
+{% endif %}
+{% endblock %}

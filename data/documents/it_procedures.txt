@@ -1,0 +1,42 @@
+================================================================================
+                    IT SUPPORT PROCEDURES
+                    TechCorp IT Department
+================================================================================
+
+HOW TO SUBMIT A SUPPORT TICKET
+------------------------------
+1. Log into the internal portal
+2. Navigate to IT Tools section
+3. Click "Submit Ticket" (coming soon)
+4. Or email: support@techcorp.local
+
+PRIORITY LEVELS
+---------------
+P1 - CRITICAL:  System down, business impact (Response: 15 min)
+P2 - HIGH:      Major feature broken (Response: 1 hour)
+P3 - MEDIUM:    Minor issue, workaround exists (Response: 4 hours)
+P4 - LOW:       Enhancement requests (Response: Next business day)
+
+COMMON ISSUES
+-------------
+Q: I forgot my password
+A: Use the self-service portal or contact IT
+
+Q: VPN not connecting
+A: Try reconnecting. If issue persists, contact IT
+
+Q: Email not syncing
+A: Check network connection, restart mail client
+
+NETWORK TOOLS
+-------------
+The portal includes network diagnostic tools:
+- Ping: Test connectivity to hosts
+- NSLookup: Query DNS records
+- Traceroute: Trace network path
+
+These tools are for authorized troubleshooting only.
+
+================================================================================
+                    IT Department: ext. 1234
+================================================================================

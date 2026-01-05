@@ -1,0 +1,45 @@
+# TechCorp Portal - Docker Compose Configuration
+# HackConRD 2026 Web Security Workshop
+#
+# WARNING: This application is intentionally vulnerable!
+# Use only in isolated lab environments.
+
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: techcorp-portal
+    ports:
+      - "8080:5000"
+    environment:
+      - FLASK_DEBUG=1
+      - SECRET_KEY=hackconrd2026-super-secret-key
+      - JWT_SECRET_KEY=jwt-secret-key
+    volumes:
+      # Persist database between restarts
+      - ./data:/app/data
+    restart: unless-stopped
+    # Security: Run as non-root (commented out to allow command injection demos)
+    # user: "1000:1000"
+
+# Usage:
+# ------
+# Build and start:
+#   docker-compose up --build
+#
+# Start in background:
+#   docker-compose up -d
+#
+# View logs:
+#   docker-compose logs -f
+#
+# Stop:
+#   docker-compose down
+#
+# Reset database:
+#   docker-compose down -v
+#   rm -rf data/portal.db
+#   docker-compose up --build
