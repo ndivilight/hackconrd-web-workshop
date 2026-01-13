@@ -47,7 +47,7 @@
                 </button>
             </form>
 
-            {% if session.get('difficulty', 'easy') == 'easy' %}
+            {% if session.get('difficulty', 'hard') == 'easy' %}
             <div class="hint-box text-start mt-4">
                 <p class="mb-2"><i class="bi bi-lightbulb"></i> <strong>Workshop Hints:</strong></p>
                 <small class="text-muted">
@@ -66,11 +66,11 @@
                 <small class="text-muted">
                     Difficulty:
                     <a href="{{ url_for('main.set_difficulty', level='easy') }}"
-                       class="{% if session.get('difficulty', 'easy') == 'easy' %}fw-bold{% endif %}">Easy</a> |
+                       class="{% if session.get('difficulty', 'hard') == 'easy' %}fw-bold{% endif %}">Easy</a> |
                     <a href="{{ url_for('main.set_difficulty', level='medium') }}"
-                       class="{% if session.get('difficulty') == 'medium' %}fw-bold{% endif %}">Medium</a> |
+                       class="{% if session.get('difficulty', 'hard') == 'medium' %}fw-bold{% endif %}">Medium</a> |
                     <a href="{{ url_for('main.set_difficulty', level='hard') }}"
-                       class="{% if session.get('difficulty') == 'hard' %}fw-bold{% endif %}">Hard</a>
+                       class="{% if session.get('difficulty', 'hard') == 'hard' %}fw-bold{% endif %}">Hard</a>
                 </small>
             </div>
         </div>

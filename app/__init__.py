@@ -10,7 +10,7 @@ def create_app():
     @app.context_processor
     def inject_difficulty():
         return {
-            'difficulty': session.get('difficulty', 'easy'),
+            'difficulty': session.get('difficulty', 'hard'),
             'difficulties': ['easy', 'medium', 'hard']
         }
 
