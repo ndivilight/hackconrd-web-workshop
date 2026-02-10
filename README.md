@@ -140,7 +140,7 @@ Cambiar dificultad: Click en el menu de dificultad en la barra de navegación.
 ---
 
 **Organizado por:** HackConRD 2026
-**Facilitador:** Nelson Colon / Bry Mano Negra
+**Facilitador:** Nelson Colon
 
 ---
 
